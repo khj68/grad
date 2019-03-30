@@ -4,13 +4,21 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <form action="/list">
+    <form action="/cgi-bin/html_practice.py" method="GET">
       <fieldset>
         <legend>COMMENT</legend>
         NAME:<br>
         <input type="text" name="name"><br>
         COMMENT:<br>
-        <input type="text" name="comment"<br><br>
+        <textarea name = "textcontent" cols = "40" rows = "4"></textarea>
         <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+    <form action="/learning">
+      <fieldset>
+        <legend>LEARNING</legend>
+        <input type="submit" value="LEARN">
+      </fieldset>
+    </form>
   </body>
 </html>
