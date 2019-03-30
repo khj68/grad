@@ -8,8 +8,8 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
 app.engine('html', require('ejs').renderFile)
 
-const server = app.listen(9000, function(){
-    console.log("Express server has started on port 9000")
+const server = app.listen(80, function(){
+    console.log("Express server has started on port 80")
 })
 
 app.use(express.static('public'))
