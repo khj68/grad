@@ -21,4 +21,15 @@ module.exports = (app, fs) =>{
             res.json(users[req.params.username])
         })
     })
+
+    app.post('/result', (req,res) => {
+        const { spawn } = require('child_process')
+        const pyProg = spawn('python', ['./html_practice.py', 'value1', 'value2'])
+
+        pyProg.stdout.on('data', (data) => {
+            console.log(data.toString())
+            res.write(data)
+            res.end('end')
+        })
+    })
 }

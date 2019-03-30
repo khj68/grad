@@ -8,14 +8,14 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
 app.engine('html', require('ejs').renderFile)
 
-const server = app.listen(80, function(){
-    console.log("Express server has started on port 80")
+const server = app.listen(8080, function(){
+    console.log("Express server has started on port 8080")
 })
 
 app.use(express.static('public'))
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({ extended : true }))
 app.use(session({
     secret: '@#@$iwanttograduate#@$#$',
     resave: false,
