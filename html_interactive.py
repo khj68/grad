@@ -4,11 +4,12 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
 import cgi, cgitb
+import sys
 
-form = cgi.FieldStorage()
+# form = cgi.FieldStorage()
 
-name = form.getvalue('name')
-comment = form.getvalue('textcontent')
+# name = form.getvalue('name')
+# comment = form.getvalue('textcontent')
 
 df = pd.read_csv('./data/refined_movie_review.csv')
 
@@ -26,13 +27,6 @@ y_pred = clf.predict(X_test)
 label = {0:'negative comment', 1:'positive comment'}
 
   
-example = [comment]
-print('Content-type:text/html\r\n\r\n')
-print('<html>')
-print('<head>')
-print('<title>MACHINE LEARNING RESULT</title>')
-print('</head>')
-print('<body>')
-print('prediction: %s\nprecision: %.3f%%' %(label[clf.predict(example)[0]], np.max(clf.predict_proba(example))*100))
-print('</body>')
-print('</html>')
+example = [sys.argv[2]]
+print('%s! Thank you for your comment!' %(sys.argv[1]))
+print('comment : %s\nprediction: %s\nprecision: %.3f%%' %(example,label[clf.predict(example)[0]], np.max(clf.predict_proba(example))*100))

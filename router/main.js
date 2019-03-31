@@ -1,35 +1,52 @@
-module.exports = (app, fs) =>{
-    app.get('/', (req,res) => {
-        res.render('index', {
-            title: "My page",
-            length: 5
+const express = require('express')
+const router = express.Router()
+const ps = require('python-shell')
+
+
+
+router.get('/', (req,res) => {
+    res.render('index')
+})
+
+router.post('/result', (req,res) => {
+    const options = {
+        mode: 'text',
+        pythonOptions: ['-u'],
+        pythonPath: 'D:\\Python\\Python36\\python.exe',
+        scriptPath:'D:\\grad',
+        args: [req.body.name, req.body.comment]
+    }
+    ps.PythonShell.run('html_interactive.py', options, (err, result) => {
+        if(err) console.log('err msg : ', err)
+        console.log(req.body.comment)
+        console.log('results: %j', result)
+        // res.send(result)
+        res.render('result', {
+            name: req.body.name,
+            comment: req.body.comment,
+            mood: result[2],
+            precision: result[3],
         })
     })
+})
 
-    app.get('/list', (req,res) => {
-        fs.readFile( __dirname + "/../data/" + "user.json",
-         'utf8', (err, data) => {
-            console.log(data)
-            res.end(data)
+router.post('/learning', (req,res) => {
+    const options = {
+        mode: 'text',
+        pythonOptions: ['-u'],
+        pythonPath: 'D:\\Python\\Python36\\python.exe',
+        scriptPath:'D:\\grad',
+        // args: [req.body.name, req.body.comment]
+    }
+    ps.PythonShell.run('skl_sentiment_analysis3.py', options, (err, result) => {
+        if(err) console.log('err msg : ', err)
+        console.log('results: %j', result)
+        // res.send(result)
+        res.render('learning', {
+            learning_time : result[2],
+            precision : result[3]
         })
     })
+})
 
-    app.get('/getUser/:username', (req,res) => {
-        fs.readFile( __dirname + "/../data/user.json", 'utf8', 
-        (err, data) => {
-            const users = JSON.parse(data)
-            res.json(users[req.params.username])
-        })
-    })
-
-    app.post('/result', (req,res) => {
-        const { spawn } = require('child_process')
-        const pyProg = spawn('python', ['./html_practice.py', 'value1', 'value2'])
-
-        pyProg.stdout.on('data', (data) => {
-            console.log(data.toString())
-            res.write(data)
-            res.end('end')
-        })
-    })
-}
+module.exports = router
