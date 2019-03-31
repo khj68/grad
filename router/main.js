@@ -12,8 +12,8 @@ router.post('/result', (req,res) => {
     const options = {
         mode: 'text',
         pythonOptions: ['-u'],
-        pythonPath: 'D:\\Python\\Python36\\python.exe',
-        scriptPath:'D:\\grad',
+        //pythonPath: 'D:\\Python\\Python36\\python.exe',
+        scriptPath:'/home/ubuntu/grad/',
         args: [req.body.name, req.body.comment]
     }
     ps.PythonShell.run('html_interactive.py', options, (err, result) => {
@@ -34,8 +34,8 @@ router.post('/learning', (req,res) => {
     const options = {
         mode: 'text',
         pythonOptions: ['-u'],
-        pythonPath: 'D:\\Python\\Python36\\python.exe',
-        scriptPath:'D:\\grad',
+        //pythonPath: 'D:\\Python\\Python36\\python.exe',
+        scriptPath:'/home/ubuntu/grad/',
         // args: [req.body.name, req.body.comment]
     }
     ps.PythonShell.run('skl_sentiment_analysis3.py', options, (err, result) => {
