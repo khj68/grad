@@ -30,7 +30,7 @@ router.post('/result', (req,res) => {
     })
 })
 
-router.post('/learning', (req,res) => {
+router.get('/learning', (req,res) => {
     const options = {
         mode: 'text',
         pythonOptions: ['-u'],
