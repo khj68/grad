@@ -49,4 +49,23 @@ router.get('/learning', (req,res) => {
     })
 })
 
+router.get('/batch', (req,res) => {
+    const options = {
+        mode: 'text',
+        pythonOptions: ['-u'],
+        //pythonPath: 'D:\\Python\\Python36\\python.exe',
+        scriptPath:'/home/ubuntu/grad/',
+        // args: [req.body.name, req.body.comment]
+    }
+    ps.PythonShell.run('batch_learning.py', options, (err, result) => {
+        if(err) console.log('err msg : ', err)
+        console.log('results: %j', result)
+        // res.send(result)
+        res.render('learning', {
+            learning_time : result[2],
+            precision : result[3]
+        })
+    })
+})
+
 module.exports = router
