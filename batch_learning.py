@@ -26,8 +26,8 @@ df = pd.read_csv('./data/refined_movie_review.csv')
 print('current data size is ', data_size)
 print('current index is ', cur_num)
 
-X_train = df.loc[:cur_num, 'review'].values
-y_train = df.loc[:cur_num, 'sentiment'].values
+X_train = df.loc[cur_num - 5000 :cur_num, 'review'].values
+y_train = df.loc[cur_num - 5000 :cur_num, 'sentiment'].values
 X_test = df.loc[35000:, 'review'].values
 y_test = df.loc[35000:, 'sentiment'].values
 
