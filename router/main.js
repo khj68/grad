@@ -61,7 +61,7 @@ router.get('/batch', (req,res) => {
         if(err) console.log('err msg : ', err)
         console.log('results: %j', result)
         // res.send(result)
-        res.render('learning', {
+        res.render('batch', {
             data_size : result[0],
             cur_num : result[1],
             learning_time : result[4],
