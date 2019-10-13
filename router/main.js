@@ -71,4 +71,20 @@ router.get('/batch', (req,res) => {
     })
 })
 
+router.get('/check_version', (req,res) => {
+    const options = {
+        mode: 'text',
+        pythonOptions: ['-u'],
+        scriptPath:'/home/ubuntu/grad/'
+    }
+    ps.PythonShell.run('check_version.py', options, (err, result) => {
+        if(err) console.log('err msg : ', err)
+        console.log('results: %j', result)
+        console.log(result)
+        res.render('check_version', {
+            version : result[0]
+        })
+    })
+})
+
 module.exports = router
