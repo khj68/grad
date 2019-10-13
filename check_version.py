@@ -44,8 +44,7 @@ def lambda_handler(event, context) :
   if n_version > c_version :
     new_data = { "$set" : { "batch" : {"data" : data_size, "num" : cur_num , "n_version" : n_version, "c_version":n_version, "updated":1}}}
     collection.update_one(cur_data, new_data)
-    s3_client.download_file('mlbucket12156','new_classifier.pkl', '/tmp/new_classifier.pkl')
-    s3_client.upload_file('/tmp/new_classifier.pkl', 'mlbucket12156', 'classifier.pkl')
+    os.rename("./data/n_classifier.pkl","./data/classifier.pkl")
     print('Current version is old. Update implemented.')
     pinrt('version checked. model updated. your version is now newest.')    
   else :
