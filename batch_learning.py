@@ -12,10 +12,12 @@ from bson.objectid import ObjectId
 
 client = MongoClient('mongodb+srv://khj68:1234@cluster0-jaaex.mongodb.net/test?retryWrites=true')
 db = client.graddb
-collection = db.batch
+collection = db.batch_aws
 cur_data = collection.find_one()
 data_size = cur_data['batch']['data']
 cur_num = cur_data['batch']['num']
+c_version = cur_data['batch']['c_version']
+updated = cur_data['batch']['updated']
 
 df = pd.read_csv('./data/refined_movie_review.csv')
 
@@ -48,13 +50,13 @@ dest = os.path.join(curDir, 'data', 'pklObject')
 if not os.path.exists(dest):
   os.makedirs(dest)
 
-pickle.dump(lr_tfidf, open(os.path.join(dest, 'classifier.pkl'), 'wb'), protocol=4)
+pickle.dump(lr_tfidf, open(os.path.join(dest, 'n_classifier.pkl'), 'wb'), protocol=4)
 print('finish saving machine learning data')
 
 
 if(cur_num + 5000 > data_size) :
-  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 5000 }}}
+  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 5000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
   collection.update_one(cur_data, new_data)
 else:
-  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000 }}}
+  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
   collection.update_one(cur_data, new_data)
