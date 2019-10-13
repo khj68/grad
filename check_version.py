@@ -11,6 +11,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import json
 
+stime = time()
+
 
 client = MongoClient('mongodb+srv://khj68:1234@cluster0-jaaex.mongodb.net/test?retryWrites=true')
 db = client.graddb
@@ -33,3 +35,5 @@ if n_version > c_version :
 else :
   print("Current version is new. Don't need to update.")
   print('version checked. your version is already newest.')
+
+print(time()-stime)
