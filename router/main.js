@@ -43,8 +43,8 @@ router.get('/learning', (req,res) => {
         console.log('results: %j', result)
         // res.send(result)
         res.render('learning', {
-            learning_time : result[3],
-            precision : result[4]
+            learning_time : result[2],
+            precision : result[3]
         })
     })
 })
@@ -61,6 +61,7 @@ router.get('/batch', (req,res) => {
         if(err) console.log('err msg : ', err)
         console.log('results: %j', result)
         // res.send(result)
+        console.log(result)
         res.render('batch', {
             data_size : result[0],
             cur_num : result[1],
