@@ -24,8 +24,8 @@ router.post('/result', (req,res) => {
         res.render('result', {
             name: req.body.name,
             comment: req.body.comment,
-            mood: result[2],
-            precision: result[3],
+            mood: result[3],
+            precision: result[4],
         })
     })
 })
