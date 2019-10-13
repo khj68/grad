@@ -44,7 +44,7 @@ def lambda_handler(event, context) :
   if n_version > c_version :
     new_data = { "$set" : { "batch" : {"data" : data_size, "num" : cur_num , "n_version" : n_version, "c_version":n_version, "updated":1}}}
     collection.update_one(cur_data, new_data)
-    os.rename("./data/n_classifier.pkl","./data/classifier.pkl")
+    os.rename("./data/pklObject/n_classifier.pkl","./data/pklObject/classifier.pkl")
     print('Current version is old. Update implemented.')
     pinrt('version checked. model updated. your version is now newest.')    
   else :
