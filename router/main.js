@@ -43,8 +43,8 @@ router.get('/learning', (req,res) => {
         console.log('results: %j', result)
         // res.send(result)
         res.render('learning', {
-            learning_time : result[2],
-            precision : result[3]
+            learning_time : result[3],
+            precision : result[4]
         })
     })
 })
