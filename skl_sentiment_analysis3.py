@@ -6,7 +6,7 @@ import pickle
 import os
 from time import time
 import pandas as pd
-from mylib.tokenizer import tokenizer, tokenizer_porter
+from mylib.tokenizer import tokenizer
 
 df = pd.read_csv('./data/refined_movie_review.csv')
 
