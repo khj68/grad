@@ -90,4 +90,23 @@ router.get('/check_version', (req,res) => {
     })
 })
 
+router.get('/one_update', (req,res) => {
+    const options = {
+        mode: 'text',
+        pythonOptions: ['-u'],
+        scriptPath:'/home/ubuntu/grad/'
+    }
+    ps.PythonShell.run('one_file_update.py', options, (err, result) => {
+        if(err) console.log('err msg : ', err)
+        console.log('results: %j', result)
+        console.log(result)
+        res.render('one_file_update', {
+            data_size : result[0],
+            cur_num : result[1],
+            learning_time : result[4],
+            precision : result[5]
+        })
+    })
+})
+
 module.exports = router
