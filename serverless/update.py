@@ -36,7 +36,7 @@ def lambda_handler(event, context) :
   # for obj in bucket.objects.all() :
   #   print(obj)
 
-  s3_client = boto3.client('s3', aws_access_key_id='AKIA55B2JG5FH2ES7QJB', aws_secret_access_key='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')
+  s3_client = boto3.client('s3', aws_access_key_id='AKIA55B2JG5FI5LA5NGZ', aws_secret_access_key='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')
   result = s3_client.get_bucket_acl(Bucket='mlbucket12156')
   print(result)
   s3_client.download_file('mlbucket12156','classifier.pkl', '/tmp/classifier.pkl')
@@ -50,6 +50,7 @@ def lambda_handler(event, context) :
   data_size = cur_data['batch']['data']
   cur_num = cur_data['batch']['num']
   c_version = cur_data['batch']['c_version']
+  updated = cur_data['batch']['updated']
 
   df = pd.read_csv('/tmp/refined_movie_review.csv')
 
@@ -81,18 +82,18 @@ def lambda_handler(event, context) :
     os.makedirs(dest)
 
   # pickle.dump(lr_tfidf, open(os.path.join(dest, 'tmp.pkl'), 'wb'), protocol=4)
-  pickle.dump(lr_tfidf, open(os.path.join(dest, 'tmp.pkl'), 'wb'), protocol=4)
+  pickle.dump(lr_tfidf, open(os.path.join(dest, 'classifier.pkl'), 'wb'), protocol=4)
   print('finish saving machine learning data')
 
 
   if(cur_num + 5000 > data_size) :
-    new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 5000 , "n_version" : c_version+1, "c_version":c_version}}}
+    new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 5000 , "n_version" : c_version+1, "c_version":c_version, "updated":updated}}}
     collection.update_one(cur_data, new_data)
   else:
-    new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000 , "n_version" : c_version+1, "c_version":c_version}}}
+    new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000 , "n_version" : c_version+1, "c_version":c_version, "updated":updated}}}
     collection.update_one(cur_data, new_data)
 
-  s3_client.upload_file('/tmp/classifier.pkl', 'mlbucket12156', 'classifier.pkl')
+  s3_client.upload_file('/tmp/classifier.pkl', 'mlbucket12156', 'new_classifier.pkl')
   print('uploaded to S3')
 
   end = time() - start
