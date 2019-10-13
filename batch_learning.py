@@ -6,7 +6,7 @@ import pickle
 import os
 from time import time
 import pandas as pd
-from mylib.tokenizer import tokenizer, tokenizer_porter
+from mylib.tokenizer import tokenizer
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
