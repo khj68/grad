@@ -82,7 +82,10 @@ router.get('/check_version', (req,res) => {
         console.log('results: %j', result)
         console.log(result)
         res.render('check_version', {
-            version : result[0]
+            c_version : result[0],
+            n_version : result[1],
+            res1 : result[2],
+            res2 : result[3]
         })
     })
 })
