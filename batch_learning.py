@@ -42,7 +42,7 @@ lr_tfidf.fit(X_train, y_train)
 print('finish machine learning')
 
 y_pred = lr_tfidf.predict(X_test)
-print('finish test : time [%d]s' %(time()-stime))
+print('finish test : time [%f]s' %(time()-stime))
 print('precision: %.3f' %accuracy_score(y_test, y_pred))
 
 curDir = os.getcwd()
