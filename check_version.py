@@ -29,7 +29,7 @@ if n_version > c_version :
   collection.update_one(cur_data, new_data)
   os.rename("./data/pklObject/n_classifier.pkl","./data/pklObject/classifier.pkl")
   print('Current version is old. Update implemented.')
-  pinrt('version checked. model updated. your version is now newest.')    
+  print('version checked. model updated. your version is now newest.')    
 else :
   print("Current version is new. Don't need to update.")
   print('version checked. your version is already newest.')
