@@ -12,38 +12,24 @@ from bson.objectid import ObjectId
 import json
 
 
-def lambda_handler(event, context) :
+client = MongoClient('mongodb+srv://khj68:1234@cluster0-jaaex.mongodb.net/test?retryWrites=true')
+db = client.graddb
+collection = db.batch_aws
+cur_data = collection.find_one()
+data_size = cur_data['batch']['data']
+cur_num = cur_data['batch']['num']
+n_version = cur_data['batch']['n_version']
+c_version = cur_data['batch']['c_version']
+updated = cur_data['batch']['updated']
+print('current version : ', c_version)
+print('new version : ', n_version)
 
-  # s3 = boto3.resource('s3')
-  # for bucket in s3.buckets.all() :
-  #   print(bucket.name)
-  # bucket = s3.Bucket('mlbucket12156')
-  # print(bucket)
-  # for obj in bucket.objects.all() :
-  #   print(obj)
-
-  # print(result)
-
-
-  client = MongoClient('mongodb+srv://khj68:1234@cluster0-jaaex.mongodb.net/test?retryWrites=true')
-  db = client.graddb
-  collection = db.batch_aws
-  cur_data = collection.find_one()
-  data_size = cur_data['batch']['data']
-  cur_num = cur_data['batch']['num']
-  n_version = cur_data['batch']['n_version']
-  c_version = cur_data['batch']['c_version']
-  updated = cur_data['batch']['updated']
-  print('current version : ', c_version)
-  print('new version : ', n_version)
-
-
-  if n_version > c_version :
-    new_data = { "$set" : { "batch" : {"data" : data_size, "num" : cur_num , "n_version" : n_version, "c_version":n_version, "updated":1}}}
-    collection.update_one(cur_data, new_data)
-    os.rename("./data/pklObject/n_classifier.pkl","./data/pklObject/classifier.pkl")
-    print('Current version is old. Update implemented.')
-    pinrt('version checked. model updated. your version is now newest.')    
-  else :
-    print("Current version is new. Don't need to update.")
-    print('version checked. your version is already newest.')
+if n_version > c_version :
+  new_data = { "$set" : { "batch" : {"data" : data_size, "num" : cur_num , "n_version" : n_version, "c_version":n_version, "updated":1}}}
+  collection.update_one(cur_data, new_data)
+  os.rename("./data/pklObject/n_classifier.pkl","./data/pklObject/classifier.pkl")
+  print('Current version is old. Update implemented.')
+  pinrt('version checked. model updated. your version is now newest.')    
+else :
+  print("Current version is new. Don't need to update.")
+  print('version checked. your version is already newest.')
