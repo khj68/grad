@@ -1,4 +1,3 @@
-import boto3
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -23,8 +22,6 @@ def lambda_handler(event, context) :
   # for obj in bucket.objects.all() :
   #   print(obj)
 
-  s3_client = boto3.client('s3', aws_access_key_id='AKIA55B2JG5FI5LA5NGZ', aws_secret_access_key='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')
-  result = s3_client.get_bucket_acl(Bucket='mlbucket12156')
   # print(result)
 
 
