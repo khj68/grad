@@ -5,6 +5,9 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 import cgi, cgitb
 import sys
+from time import time
+
+start_time = time()
 
 # form = cgi.FieldStorage()
 
@@ -30,3 +33,5 @@ label = {0:'negative comment', 1:'positive comment'}
 example = [sys.argv[2]]
 print('%s! Thank you for your comment!' %(sys.argv[1]))
 print('comment : %s\nprediction: %s\nprecision: %.3f%%' %(example,label[clf.predict(example)[0]], np.max(clf.predict_proba(example))*100))
+
+print('total time :', time()-stime)
