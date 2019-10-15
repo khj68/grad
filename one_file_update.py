@@ -10,6 +10,8 @@ from mylib.tokenizer import tokenizer
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+start_time = time()
+
 client = MongoClient('mongodb+srv://khj68:1234@cluster0-jaaex.mongodb.net/test?retryWrites=true')
 db = client.graddb
 collection = db.batch_aws
@@ -36,13 +38,13 @@ y_test = df.loc[35000:, 'sentiment'].values
 tfidf = TfidfVectorizer(lowercase=False, tokenizer=tokenizer)
 lr_tfidf = Pipeline([('vect', tfidf), ('clf', LogisticRegression(C=10.0, penalty='l2', random_state=0))])
 
-stime = time()
+
 print('start machine learning')
 lr_tfidf.fit(X_train, y_train)
 print('finish machine learning')
 
 y_pred = lr_tfidf.predict(X_test)
-print('finish test : time [%f]s' %(time()-stime))
+
 print('precision: %.3f' %accuracy_score(y_test, y_pred))
 
 curDir = os.getcwd()
@@ -50,8 +52,10 @@ dest = os.path.join(curDir, 'data', 'pklObject')
 if not os.path.exists(dest):
   os.makedirs(dest)
 
+stime = time()
 pickle.dump(lr_tfidf, open(os.path.join(dest, 'classifier.pkl'), 'wb'), protocol=4)
-print('finish saving machine learning data')
+print('finish test : time [%f]s' %(time()-stime))
+
 
 
 if(cur_num + 5000 > data_size) :
@@ -60,3 +64,5 @@ if(cur_num + 5000 > data_size) :
 else:
   new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
   collection.update_one(cur_data, new_data)
+
+print('finish function : total time [%f]s' %(time()-start_time))
