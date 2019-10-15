@@ -36,4 +36,4 @@ else :
   print("Current version is new. Don't need to update.")
   print('version checked. your version is already newest.')
 
-print(time()-stime)
+print('total time :', time()-stime)
