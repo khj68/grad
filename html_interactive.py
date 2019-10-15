@@ -34,4 +34,4 @@ example = [sys.argv[2]]
 print('%s! Thank you for your comment!' %(sys.argv[1]))
 print('comment : %s\nprediction: %s\nprecision: %.3f%%' %(example,label[clf.predict(example)[0]], np.max(clf.predict_proba(example))*100))
 
-print('total time :', time()-stime)
+print('total time :', time()-start_time)
