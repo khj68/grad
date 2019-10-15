@@ -30,8 +30,8 @@ df = pd.read_csv('./data/refined_movie_review.csv')
 print('current data size is ', data_size)
 print('current index is ', cur_num)
 
-X_train = df.loc[cur_num - 5000 :cur_num, 'review'].values
-y_train = df.loc[cur_num - 5000 :cur_num, 'sentiment'].values
+X_train = df.loc[cur_num - 10000 :cur_num, 'review'].values
+y_train = df.loc[cur_num - 10000 :cur_num, 'sentiment'].values
 X_test = df.loc[35000:, 'review'].values
 y_test = df.loc[35000:, 'sentiment'].values
 
@@ -58,11 +58,11 @@ print('finish saving : downtime [%f]s' %(time()-stime))
 
 
 
-if(cur_num + 5000 > data_size) :
-  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 5000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
+if(cur_num + 10000 > data_size) :
+  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : 10000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
   collection.update_one(cur_data, new_data)
 else:
-  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+5000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
+  new_data = { "$set" : { "batch" : {"data" : 50000, "num" : cur_num+10000, "n_version" : c_version+1, "c_version":c_version, "updated":updated }}}
   collection.update_one(cur_data, new_data)
 
   print('finish function : total time [%f]s' %(time()-start_time))
